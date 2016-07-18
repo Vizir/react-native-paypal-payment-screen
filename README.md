@@ -133,9 +133,9 @@ public class MainActivity extends ReactActivity {
 
 ```javascript
 var PayPal = require('react-native-paypal');
-PayPalAndroid.paymentRequest({
+PayPal.paymentRequest({
   clientId: 'AbyfNDFV53djg6w4yYgiug_JaDfBSUiYI7o6NM9HE1CQ_qk9XxbUX0nwcPXXQHaNAWYtDfphQtWB3q4R',
-  environment: PayPalAndroid.SANDBOX,
+  environment: PayPal.SANDBOX,
   price: '42.00',
   currency: 'USD',
   description: 'PayPal Test'
