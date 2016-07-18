@@ -30,13 +30,8 @@ public class PayPal extends ReactContextBaseJavaModule {
   private Callback successCallback;
   private Callback errorCallback;
 
-  private Context activityContext;
-  private Activity currentActivity;
-
-  public PayPal(ReactApplicationContext reactContext, Context activityContext, int requestCode) {
+  public PayPal(ReactApplicationContext reactContext, int requestCode) {
     super(reactContext);
-    this.activityContext = activityContext;
-    this.currentActivity = (Activity)activityContext;
     this.paymentIntentRequestCode = requestCode;
   }
 
@@ -82,17 +77,17 @@ public class PayPal extends ReactContextBaseJavaModule {
                         PayPalPayment.PAYMENT_INTENT_SALE);
 
     Intent intent =
-      new Intent(activityContext, PaymentActivity.class)
+      new Intent(getCurrentActivity(), PaymentActivity.class)
       .putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
       .putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 
-    currentActivity.startActivityForResult(intent, paymentIntentRequestCode);
+    getCurrentActivity().startActivityForResult(intent, paymentIntentRequestCode);
   }
 
   private void startPayPalService(PayPalConfiguration config) {
-    Intent intent = new Intent(currentActivity, PayPalService.class);
+    Intent intent = new Intent(getCurrentActivity(), PayPalService.class);
     intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-    currentActivity.startService(intent);
+    getCurrentActivity().startService(intent);
   }
 
   public void handleActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -113,6 +108,6 @@ public class PayPal extends ReactContextBaseJavaModule {
       errorCallback.invoke(ERROR_INVALID_CONFIG);
     }
 
-    currentActivity.stopService(new Intent(currentActivity, PayPalService.class));
+    getReactApplicationContext().stopService(new Intent(getReactApplicationContext(), PayPalService.class));
   }
 }
