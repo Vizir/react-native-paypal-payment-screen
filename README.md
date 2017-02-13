@@ -8,6 +8,9 @@ A React Native interface for the PayPal Payment UI
 
 # Setup
 
+Android
+-------
+
 1. Add react-navive-paypal to your project
 
 ``` bash
@@ -147,7 +150,39 @@ PayPal.paymentRequest(...).catch(function (error_code) {
 })
 ```
 
+iOS
+---
+
 ### TODO:
-- Automated tests
-- iOS version
-- Future payment (subscriptions)
+
+* [ ] Refactor & cleanup
+* [ ] Automated tests
+* [ ] Future payment (subscriptions)
+
+### Installation
+
+Currently you have to install via `npm` from GitHub (or change the version specifier in `package.json` to `zeroseven/react-native-paypal#ios`):
+
+```shell
+npm install --save zeroseven/react-native-paypal#ios
+```
+
+#### Install the PayPal-iOS-SDK
+
+You then have to install the PayPal-iOS-SDK into `node_modules/react-native-paypal/ios/lib/Paypal`
+
+Here's a one-liner to download and unpack version `2.13.0`:
+
+```shell
+mkdir -p node_modules/react-native-paypal/ios/lib/Paypal && curl -L --progress https://github.com/paypal/PayPal-iOS-SDK/archive/2.13.0.tar.gz | tar -xz - -C node_modules/react-native-paypal/ios/lib/Paypal --strip-components=1
+```
+
+Include PayPal as normally, following their directions. Their integration steps and iOS SDK can be found [here](https://github.com/paypal/PayPal-iOS-SDK). After doing that, also drag MFLReactNativePayPal.h and MFLReactNativePayPal.m into your project.
+
+#### Add `MFLReactNativePayPal.xcodeproj`
+
+Add `node_modules/react-native-paypal/ios/MFLReactNativePayPal.xcodeproj`
+to the `Libraries` group in iOS and link `libMFLReactNativePayPal.a` as described in Step 2 of the
+[React Native Manual Linking docs](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#manual-linking).
+
+Follow steps 4 and 5 of [the PayPal instalation instructions](https://github.com/paypal/PayPal-iOS-SDK#if-you-dont-use-cocoapods-then), as well as the [additional steps here](https://github.com/paypal/PayPal-iOS-SDK#with-or-without-cocoapods). **This has to be done for the main app, not for the library you included.**
